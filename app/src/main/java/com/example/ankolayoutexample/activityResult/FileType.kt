@@ -28,4 +28,6 @@ sealed class IntentType{
     class CameraVideo : IntentType()
     data class Other(val intent : Intent) : IntentType()
     data class Gallery(val fileType: FileType , val isMultiSelect : Boolean = false) : IntentType()
+    class OverlayPermission(): IntentType()
+    class WriteSettingsPermission(): IntentType()
 }

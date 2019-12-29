@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import java.io.File
+import androidx.core.content.FileProvider
+import org.jetbrains.anko.toast
 
 
 //fun File.openFile(context: Context) {
@@ -62,16 +64,24 @@ import java.io.File
 //    }
 //}
 
-fun File.openFile(context: Context){
-    MimeTypeMap.getSingleton().getMimeTypeFromExtension(this.extension).also {mimeType->
-        Uri.fromFile(this).also {uri->
-            Intent(Intent.ACTION_VIEW).also {fileIntent->
-                fileIntent.setDataAndType(uri , mimeType ?: "*/*")
-                fileIntent.resolveActivity(context.packageManager)?.also {
-                    context.startActivity(fileIntent)
+fun File.openFile(context: Context, authority : String){
+    if(!authority.isBlank()) {
+        MimeTypeMap.getSingleton().getMimeTypeFromExtension(this.extension).also { mimeType ->
+            FileProvider.getUriForFile(context,
+                context.applicationContext.packageName + ".provider",
+                this
+            )?.also { uri ->
+                Intent(Intent.ACTION_VIEW).also { fileIntent ->
+                    fileIntent.setDataAndType(uri, mimeType ?: "*/*")
+                    fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    fileIntent.resolveActivity(context.packageManager)?.also {
+                        context.startActivity(fileIntent)
+                    } ?: context.toast("No activity found to view this file.")
                 }
-            }
+            } ?: context.toast("Can't open the file")
         }
+    }else{
+        context.toast("Can't open file authority must be provided")
     }
 
 }

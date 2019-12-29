@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import java.io.File
@@ -83,8 +84,6 @@ internal class ActivityResultFragment(
                     intentType.intent.resolveActivity(requireActivity().packageManager)?.also {
                         startActivityForResult(intentType.intent, requestCode)
                     }
-
-
                 }
                 is IntentType.Gallery -> {
                     val intent = when (intentType.fileType) {
@@ -168,6 +167,22 @@ internal class ActivityResultFragment(
                     }
 
                 }
+                is IntentType.WriteSettingsPermission->{
+                    Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).also { settingIntent ->
+                        settingIntent.data = Uri.parse("package:${requireActivity().packageName}")
+                        settingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        settingIntent.resolveActivity(requireActivity().packageManager)?.also {
+                            startActivityForResult(settingIntent, requestCode)
+                        }
+                    }
+                }
+                is IntentType.OverlayPermission->{
+                    Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${requireActivity().packageName}")).also{overlayIntent->
+                        overlayIntent.resolveActivity(requireActivity().packageManager)?.also {
+                            startActivityForResult(overlayIntent, requestCode)
+                        }
+                    }
+                }
             }
         } else {
             fragmentManager?.beginTransaction()
@@ -181,11 +196,9 @@ internal class ActivityResultFragment(
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        data?.let { dataIntent->
             when (intentType) {
                 is IntentType.CameraImage -> {
-                    dataIntent.data = Uri.parse(cameraFilePath)
+                    data?.data = Uri.parse(cameraFilePath)
                     galleryAddPic()
                 }
             }
@@ -193,12 +206,10 @@ internal class ActivityResultFragment(
             OnResultCallback?.invoke(
                 OnResultData(
                     resultCode,
-                    dataIntent,
+                    data,
                     runtimeActivityResult,
                     activity)
             )
-        }
-
         fragmentManager?.beginTransaction()
             ?.remove(this)
             ?.commitAllowingStateLoss()

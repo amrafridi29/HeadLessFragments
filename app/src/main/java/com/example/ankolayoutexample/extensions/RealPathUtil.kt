@@ -1,4 +1,4 @@
-package com.example.ankolayoutexample.activityResult
+package com.example.ankolayoutexample.extensions
 
 import android.annotation.SuppressLint
 import android.content.ContentUris
@@ -17,9 +17,15 @@ object RealPathUtil {
     fun getRealPath(context: Context, fileUri: Uri?): String? {
        fileUri ?: return null
         return if (Build.VERSION.SDK_INT < 19) {
-            getRealPathFromURIAPI11to18(context, fileUri)
+            getRealPathFromURIAPI11to18(
+                context,
+                fileUri
+            )
         } else {
-            getRealPathFromURIAPI19(context, fileUri)
+            getRealPathFromURIAPI19(
+                context,
+                fileUri
+            )
         }
     }
 
@@ -84,7 +90,12 @@ object RealPathUtil {
                 }
                 val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads"), java.lang.Long.valueOf(id))
 
-                return getDataColumn(context, contentUri, null, null)
+                return getDataColumn(
+                    context,
+                    contentUri,
+                    null,
+                    null
+                )
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -100,13 +111,23 @@ object RealPathUtil {
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(split[1])
 
-                return getDataColumn(context, contentUri, selection, selectionArgs)
+                return getDataColumn(
+                    context,
+                    contentUri,
+                    selection,
+                    selectionArgs
+                )
             }// MediaProvider
             // DownloadsProvider
         } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
 
             // Return the remote address
-            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(context, uri, null, null)
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(
+                context,
+                uri,
+                null,
+                null
+            )
         } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
             return uri.path
         }// File

@@ -106,5 +106,13 @@ fun AppCompatActivity.pickFileFromGallery(fileType: FileType , isMultiSelect : B
 
 }
 
+fun AppCompatActivity.requestOverlayPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
+    RuntimeActivityResult(this , IntentType.OverlayPermission() , OnResultCallback).ask()
+}
+
+fun AppCompatActivity.requestWriteSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
+    RuntimeActivityResult(this , IntentType.WriteSettingsPermission() , OnResultCallback).ask()
+}
+
 
 

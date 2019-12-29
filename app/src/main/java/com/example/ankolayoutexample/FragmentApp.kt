@@ -1,27 +1,17 @@
 package com.example.ankolayoutexample
 
-import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.example.ankolayoutexample.delegates.FragmentArgumentDelegate
 import com.example.ankolayoutexample.delegates.Settings
 import com.example.ankolayoutexample.delegates.argument
 import com.example.ankolayoutexample.delegates.argumentNullable
 import com.example.ankolayoutexample.ui.BaseFragment
 import com.example.ankolayoutexample.ui.FragmentApUi
-import com.example.ankolayoutexample.ui.MovieUI
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.cancelButton
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
-import android.content.Intent
-import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.extensions.*
+import org.jetbrains.anko.support.v4.toast
 
 
 class FragmentApp : BaseFragment<FragmentApUi>(){
@@ -53,14 +43,47 @@ class FragmentApp : BaseFragment<FragmentApUi>(){
 
 
     fun showResult(){
-        askCameraPermission {
+
+        /*hasWriteSettingPermission {result->
+            if(result.canWriteSettings){
+                toast("Granted")
+            }else{
+                alert("Not Granted Permission" , "Write Settings Permission") {
+                    positiveButton("Ask Again"){dialog ->
+                        result.askAgain()
+                        dialog.dismiss()
+                    }
+                    cancelButton{
+                        it.dismiss()
+                    }
+                }.show()
+            }
+        }*/
+        hasOverlayPermission {result->
+            if(result.canDrawOverlay){
+                toast("Granted")
+            }else{
+                alert("Overlay permission is required." , "Overlay Permissin") {
+                    positiveButton("Ask Again"){dialog ->
+                        result.askAgain()
+                        dialog.dismiss()
+                    }
+                    cancelButton{
+                        it.dismiss()
+                    }
+                }.show()
+            }
+        }
+//        val file  = File("/storage/emulated/0/Download/AdmissionChallan.pdf")
+//        file.openFile(requireActivity(), "${BuildConfig.APPLICATION_ID}.provider")
+/*        askCameraPermission {
             pickFileFromGallery(FileType.APPLICATIONS, true) {
                 when(it.resultCode){
                     Activity.RESULT_OK-> toast(it.data?.data.toString())
                     Activity.RESULT_CANCELED-> toast("Cancel")
                 }
             }
-        }
+        }*/
     }
 
     private fun noNetworkDialog() {
