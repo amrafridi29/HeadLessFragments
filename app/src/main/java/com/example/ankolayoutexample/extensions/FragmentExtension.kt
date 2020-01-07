@@ -10,6 +10,8 @@ import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.activityResult.OnResultData
 import com.example.ankolayoutexample.activityResult.RuntimeActivityResult
 import com.example.ankolayoutexample.network.NetworkHelper
+import com.example.ankolayoutexample.receivers.PackageStatus
+import com.example.ankolayoutexample.receivers.PackageStatusListener
 import java.io.File
 
 fun <T : Fragment> Fragment.replaceFragment(
@@ -119,4 +121,10 @@ fun Fragment.pickFileFromGallery(fileType: FileType , isMultiSelect : Boolean = 
         (it as AppCompatActivity).pickFileFromGallery(fileType, isMultiSelect, OnResultCallback)
     }
 
+}
+
+fun Fragment.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    activity?.apply {
+        (this as AppCompatActivity).onPackageStatusListner(lambda)
+    }
 }

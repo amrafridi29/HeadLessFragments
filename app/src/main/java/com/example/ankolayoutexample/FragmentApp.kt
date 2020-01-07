@@ -2,6 +2,7 @@ package com.example.ankolayoutexample
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.example.ankolayoutexample.delegates.Settings
 import com.example.ankolayoutexample.delegates.argument
 import com.example.ankolayoutexample.delegates.argumentNullable
@@ -11,6 +12,7 @@ import org.jetbrains.anko.cancelButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import com.example.ankolayoutexample.extensions.*
+import com.example.ankolayoutexample.receivers.PackageStatusListener
 import org.jetbrains.anko.support.v4.toast
 
 
@@ -39,6 +41,11 @@ class FragmentApp : BaseFragment<FragmentApUi>(){
         setOnNetworkConnectivityListener {
             if(!it) noNetworkDialog()
         }
+
+        onPackageStatusListner{
+            toast(it.toString())
+        }
+
     }
 
 

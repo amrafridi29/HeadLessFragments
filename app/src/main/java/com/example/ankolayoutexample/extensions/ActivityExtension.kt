@@ -1,5 +1,6 @@
 package com.example.ankolayoutexample.extensions
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.provider.MediaStore
@@ -7,11 +8,14 @@ import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.activityResult.IntentType
 import com.example.ankolayoutexample.activityResult.OnResultData
 import com.example.ankolayoutexample.activityResult.RuntimeActivityResult
 import com.example.ankolayoutexample.network.NetworkHelper
+import com.example.ankolayoutexample.receivers.PackageStatus
+import com.example.ankolayoutexample.receivers.PackageStatusListener
 import java.io.File
 
 fun <T : Fragment> AppCompatActivity.replaceFragment(
@@ -116,6 +120,10 @@ fun AppCompatActivity.requestWriteSettingsPermission(OnResultCallback: ((onResul
 
 fun AppCompatActivity.requestUsageAccessSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
     RuntimeActivityResult(this , IntentType.AccessUsageSettingsPermission, OnResultCallback).ask()
+}
+
+fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    PackageStatusListener(this).observe(this , Observer (lambda))
 }
 
 
