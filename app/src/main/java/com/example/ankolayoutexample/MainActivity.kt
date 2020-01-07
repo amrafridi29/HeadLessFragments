@@ -1,21 +1,15 @@
 package com.example.ankolayoutexample
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ankolayoutexample.adapter.MovieAdapter
 import com.example.ankolayoutexample.datas.Movie
-import com.example.ankolayoutexample.delegates.Settings
 import com.example.ankolayoutexample.extensions.addFragment
-import com.example.ankolayoutexample.extensions.setOnNetworkConnectivityListener
 import com.example.ankolayoutexample.ui.BaseActivity
 import com.example.ankolayoutexample.ui.MainActivityLayout
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.yesButton
-import com.example.ankolayoutexample.network.NetworkHelper
 import org.jetbrains.anko.cancelButton
-import org.jetbrains.anko.support.v4.alert
 
 
 class MainActivity : BaseActivity<MainActivityLayout>() {
@@ -59,6 +53,9 @@ class MainActivity : BaseActivity<MainActivityLayout>() {
         if(savedInstanceState==null){
             addFragment(FragmentApp.newInstance(12, "Amir") , containerViewId = ui.frameLayoutId)
         }
+
+
+
 
 //        setOnNetworkConnectivityListener {
 //            if(!it){

@@ -1,4 +1,4 @@
-package com.example.ankolayoutexample.receivers
+package com.example.ankolayoutexample.statuslistener
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,9 +15,22 @@ class PackageStatusListener(private val context: Context) : LiveData<PackageStat
             intent?.apply {
                 data?.schemeSpecificPart?.let {packagename->
                     when(action){
-                        Intent.ACTION_PACKAGE_REMOVED->postValue(PackageStatus.Removed(packagename))
-                        Intent.ACTION_PACKAGE_CHANGED->postValue(PackageStatus.Changed(packagename))
-                        Intent.ACTION_PACKAGE_ADDED->postValue(PackageStatus.Added(this , getAppInfo(packagename)))
+                        Intent.ACTION_PACKAGE_REMOVED->postValue(
+                            PackageStatus.Removed(
+                                packagename
+                            )
+                        )
+                        Intent.ACTION_PACKAGE_CHANGED->postValue(
+                            PackageStatus.Changed(
+                                packagename
+                            )
+                        )
+                        Intent.ACTION_PACKAGE_ADDED->postValue(
+                            PackageStatus.Added(
+                                this,
+                                getAppInfo(packagename)
+                            )
+                        )
                     }
                 }
 
@@ -26,13 +39,18 @@ class PackageStatusListener(private val context: Context) : LiveData<PackageStat
     }
 
 
-    private fun getAppInfo(packagename : String?) : AppInfo{
+    private fun getAppInfo(packagename : String?) : AppInfo {
         val packageManager = context.packageManager
         val info = packageManager.getApplicationInfo(packagename, PackageManager.GET_META_DATA) ?: null
         val label = packageManager.getApplicationLabel(info) as String?
         val className = info?.className
         val icon = info?.loadIcon(packageManager)
-        return AppInfo(label , packagename , className , icon)
+        return AppInfo(
+            label,
+            packagename,
+            className,
+            icon
+        )
     }
     override fun onInactive()= unRegisterReceiver()
 

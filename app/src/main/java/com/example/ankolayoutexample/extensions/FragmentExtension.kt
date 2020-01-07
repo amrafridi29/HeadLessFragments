@@ -1,17 +1,13 @@
 package com.example.ankolayoutexample.extensions
 
 import android.content.Intent
-import android.provider.MediaStore
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.activityResult.OnResultData
-import com.example.ankolayoutexample.activityResult.RuntimeActivityResult
-import com.example.ankolayoutexample.network.NetworkHelper
-import com.example.ankolayoutexample.receivers.PackageStatus
-import com.example.ankolayoutexample.receivers.PackageStatusListener
+import com.example.ankolayoutexample.statuslistener.PackageStatus
 import java.io.File
 
 fun <T : Fragment> Fragment.replaceFragment(
@@ -88,14 +84,8 @@ fun Fragment.removeFragmentByTag(tag : String){
     }
 }
 
-fun Fragment.setOnNetworkConnectivityListener(lambda : ((isConnected : Boolean)-> Unit)?){
-    var networkHelper = findFragmentByTag(NetworkHelper.TAG)
-    if (networkHelper == null) {
-        networkHelper = NetworkHelper.newInstance(lambda)
-        addFragment(networkHelper ,  tag = NetworkHelper.TAG)
 
-    }
-}
+
 
 fun Fragment.startActivityForResult(intent : Intent, OnResultCallback : ((onResultData : OnResultData)-> Unit)?){
    activity?.let {

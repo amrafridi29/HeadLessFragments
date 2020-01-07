@@ -13,7 +13,7 @@ abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (ui as ActivityAnkoComponent<AppCompatActivity>).setContentView(this)
-        setSupportActionBar(ui.toolbar)
+       // setSupportActionBar(ui.toolbar)
     }
 
 }

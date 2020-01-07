@@ -1,9 +1,6 @@
 package com.example.ankolayoutexample.extensions
 
-import android.app.Activity
 import android.content.Intent
-import android.os.Build
-import android.provider.MediaStore
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +10,8 @@ import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.activityResult.IntentType
 import com.example.ankolayoutexample.activityResult.OnResultData
 import com.example.ankolayoutexample.activityResult.RuntimeActivityResult
-import com.example.ankolayoutexample.network.NetworkHelper
-import com.example.ankolayoutexample.receivers.PackageStatus
-import com.example.ankolayoutexample.receivers.PackageStatusListener
+import com.example.ankolayoutexample.statuslistener.PackageStatus
+import com.example.ankolayoutexample.statuslistener.PackageStatusListener
 import java.io.File
 
 fun <T : Fragment> AppCompatActivity.replaceFragment(
@@ -84,14 +80,12 @@ fun AppCompatActivity.removeFragmentByTag(tag : String){
     }
 }
 
-fun AppCompatActivity.setOnNetworkConnectivityListener(lambda : ((isConnected : Boolean)-> Unit)?){
-    var networkHelper = findFragmentByTag(NetworkHelper.TAG)
-    if (networkHelper == null) {
-        networkHelper = NetworkHelper.newInstance(lambda)
-        addFragment(networkHelper, tag = NetworkHelper.TAG)
-
-    }
+fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    PackageStatusListener(this)
+        .observe(this , Observer (lambda))
 }
+
+
 
 fun AppCompatActivity.startActivityForResult(intent : Intent, OnResultCallback : ((onResultData : OnResultData)-> Unit)?){
     RuntimeActivityResult(this, IntentType.Other(intent) , OnResultCallback).ask()
@@ -102,7 +96,7 @@ fun AppCompatActivity.takeCameraPictureResult(authority : String, storageDirecto
 }
 
 fun AppCompatActivity.takeCameraVideoResult(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.CameraVideo, OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.CameraVideo , OnResultCallback).ask()
 }
 
 fun AppCompatActivity.pickFileFromGallery(fileType: FileType , isMultiSelect : Boolean = false, OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
@@ -111,25 +105,20 @@ fun AppCompatActivity.pickFileFromGallery(fileType: FileType , isMultiSelect : B
 }
 
 fun AppCompatActivity.requestOverlayPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.OverlayPermission, OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.OverlayPermission , OnResultCallback).ask()
 }
 
 fun AppCompatActivity.requestWriteSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.WriteSettingsPermission, OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.WriteSettingsPermission , OnResultCallback).ask()
 }
 
 fun AppCompatActivity.requestUsageAccessSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.AccessUsageSettingsPermission, OnResultCallback).ask()
-}
-
-fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
-    PackageStatusListener(this).observe(this , Observer (lambda))
+    RuntimeActivityResult(this , IntentType.AccessUsageSettingsPermission , OnResultCallback).ask()
 }
 
 fun AppCompatActivity.requestAccessibilitySettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.AccessibilitySettingsPermission, OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.AccessibilitySettingsPermission , OnResultCallback).ask()
 }
-
 
 
 
