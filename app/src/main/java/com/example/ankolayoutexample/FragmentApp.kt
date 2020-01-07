@@ -59,11 +59,11 @@ class FragmentApp : BaseFragment<FragmentApUi>(){
                 }.show()
             }
         }*/
-        hasOverlayPermission {result->
-            if(result.canDrawOverlay){
+        hasUsageAccessSettingPermission {result->
+            if(result.hasAccessUsage){
                 toast("Granted")
             }else{
-                alert("Overlay permission is required." , "Overlay Permissin") {
+                alert("App will not run without usage access permissions." , "Usage Access") {
                     positiveButton("Ask Again"){dialog ->
                         result.askAgain()
                         dialog.dismiss()

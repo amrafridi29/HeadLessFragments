@@ -98,7 +98,7 @@ fun AppCompatActivity.takeCameraPictureResult(authority : String, storageDirecto
 }
 
 fun AppCompatActivity.takeCameraVideoResult(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.CameraVideo() , OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.CameraVideo, OnResultCallback).ask()
 }
 
 fun AppCompatActivity.pickFileFromGallery(fileType: FileType , isMultiSelect : Boolean = false, OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
@@ -107,11 +107,15 @@ fun AppCompatActivity.pickFileFromGallery(fileType: FileType , isMultiSelect : B
 }
 
 fun AppCompatActivity.requestOverlayPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.OverlayPermission() , OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.OverlayPermission, OnResultCallback).ask()
 }
 
 fun AppCompatActivity.requestWriteSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
-    RuntimeActivityResult(this , IntentType.WriteSettingsPermission() , OnResultCallback).ask()
+    RuntimeActivityResult(this , IntentType.WriteSettingsPermission, OnResultCallback).ask()
+}
+
+fun AppCompatActivity.requestUsageAccessSettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
+    RuntimeActivityResult(this , IntentType.AccessUsageSettingsPermission, OnResultCallback).ask()
 }
 
 

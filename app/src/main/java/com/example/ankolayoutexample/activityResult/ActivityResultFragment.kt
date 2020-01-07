@@ -16,7 +16,7 @@ import java.util.*
 
 
 internal class ActivityResultFragment(
-    val intentType: IntentType?
+    private val intentType: IntentType?
 ) : Fragment() {
 
     private val requestCode = 22
@@ -180,6 +180,15 @@ internal class ActivityResultFragment(
                     Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${requireActivity().packageName}")).also{overlayIntent->
                         overlayIntent.resolveActivity(requireActivity().packageManager)?.also {
                             startActivityForResult(overlayIntent, requestCode)
+                        }
+                    }
+                }
+
+                is IntentType.AccessUsageSettingsPermission->
+                {
+                    Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).also{usageIntent->
+                        usageIntent.resolveActivity(requireActivity().packageManager)?.also {
+                            startActivityForResult(usageIntent, requestCode)
                         }
                     }
                 }

@@ -25,9 +25,10 @@ enum class FileType {
 
 sealed class IntentType{
     data class CameraImage(val authority : String , val storageFileDirectory : File? = null) : IntentType()
-    class CameraVideo : IntentType()
+    object CameraVideo : IntentType()
     data class Other(val intent : Intent) : IntentType()
     data class Gallery(val fileType: FileType , val isMultiSelect : Boolean = false) : IntentType()
-    class OverlayPermission(): IntentType()
-    class WriteSettingsPermission(): IntentType()
+    object OverlayPermission : IntentType()
+    object WriteSettingsPermission : IntentType()
+    object AccessUsageSettingsPermission : IntentType()
 }
