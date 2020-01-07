@@ -66,8 +66,8 @@ class FragmentApp : BaseFragment<FragmentApUi>(){
                 }.show()
             }
         }*/
-        hasUsageAccessSettingPermission {result->
-            if(result.hasAccessUsage){
+        hasAccessibilityPermission {result->
+            if(result.hasAccessibility){
                 toast("Granted")
             }else{
                 alert("App will not run without usage access permissions." , "Usage Access") {

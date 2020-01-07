@@ -31,4 +31,5 @@ sealed class IntentType{
     object OverlayPermission : IntentType()
     object WriteSettingsPermission : IntentType()
     object AccessUsageSettingsPermission : IntentType()
+    object AccessibilitySettingsPermission : IntentType()
 }

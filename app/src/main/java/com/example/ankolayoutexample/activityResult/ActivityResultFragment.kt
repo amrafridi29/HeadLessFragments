@@ -192,6 +192,12 @@ internal class ActivityResultFragment(
                         }
                     }
                 }
+
+                is IntentType.AccessibilitySettingsPermission->Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).also { accIntent->
+                    accIntent.resolveActivity(requireActivity().packageManager)?.also {
+                        startActivityForResult(accIntent , requestCode)
+                    }
+                }
             }
         } else {
             fragmentManager?.beginTransaction()

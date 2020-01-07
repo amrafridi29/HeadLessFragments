@@ -1,6 +1,8 @@
 package com.example.ankolayoutexample.extensions
 
 import android.Manifest
+import android.accessibilityservice.AccessibilityServiceInfo
+import android.app.Activity
 import android.app.AppOpsManager
 import android.app.AppOpsManager.MODE_ALLOWED
 import android.app.AppOpsManager.OPSTR_GET_USAGE_STATS
@@ -13,9 +15,11 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Process
 import android.provider.Settings
+import android.view.accessibility.AccessibilityManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ankolayoutexample.activityResult.AccessUsagePermissionResult
+import com.example.ankolayoutexample.activityResult.AccessibilityPermissionResult
 import com.example.ankolayoutexample.activityResult.OverlyPermissionResult
 import com.example.ankolayoutexample.activityResult.WriteSettingsPermissionResult
 import com.github.florent37.runtimepermission.kotlin.askPermission
@@ -204,4 +208,39 @@ fun AppCompatActivity.isUsageAccessGranted(): Boolean {
 fun Fragment.isUsageAccessGranted() : Boolean{
     activity ?: return false
     return (activity as AppCompatActivity).isUsageAccessGranted()
+}
+
+fun AppCompatActivity.hasAccessibilityPermission(Granted: (result: AccessibilityPermissionResult) -> Unit){
+    if(isAccessibilityServiceEnabled()){
+        Granted.invoke(AccessibilityPermissionResult(true))
+    }else{
+        requestAccessibilitySettingsPermission { Granted.invoke(AccessibilityPermissionResult(isAccessibilityServiceEnabled(), it)) }
+    }
+}
+
+fun Fragment.hasAccessibilityPermission(Granted: (result: AccessibilityPermissionResult) -> Unit) {
+    activity?.let {
+        (it as AppCompatActivity).hasAccessibilityPermission(Granted)
+    }
+}
+
+fun AppCompatActivity.isAccessibilityServiceEnabled(): Boolean {
+    var accessibilityServiceEnabled = false
+    val am = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+    val runningServices = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC)
+    for (service in runningServices) {
+        if (service.resolveInfo.serviceInfo.packageName == packageName) {
+            accessibilityServiceEnabled = true
+        }
+    }
+    return accessibilityServiceEnabled
+}
+
+
+fun Fragment.isAccessibilityServiceEnabled() : Boolean{
+    return (requireActivity()  as AppCompatActivity).isAccessibilityServiceEnabled()
+}
+
+fun AppCompatActivity.hasAccessibilityService(){
+
 }

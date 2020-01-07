@@ -126,5 +126,10 @@ fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageS
     PackageStatusListener(this).observe(this , Observer (lambda))
 }
 
+fun AppCompatActivity.requestAccessibilitySettingsPermission(OnResultCallback: ((onResultData: OnResultData) -> Unit)?){
+    RuntimeActivityResult(this , IntentType.AccessibilitySettingsPermission, OnResultCallback).ask()
+}
+
+
 
 
