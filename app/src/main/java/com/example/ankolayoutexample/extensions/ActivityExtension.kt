@@ -80,10 +80,6 @@ fun AppCompatActivity.removeFragmentByTag(tag : String){
     }
 }
 
-fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
-    PackageStatusListener(this)
-        .observe(this , Observer (lambda))
-}
 
 
 

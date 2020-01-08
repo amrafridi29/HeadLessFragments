@@ -11,10 +11,8 @@ import org.jetbrains.anko.cancelButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import com.example.ankolayoutexample.extensions.*
-import com.example.ankolayoutexample.statuslistener.setOnBatteryStatusListener
-import com.example.ankolayoutexample.statuslistener.setOnGpsStatusListener
-import com.example.ankolayoutexample.statuslistener.setOnNetworkStatusListener
-import com.example.ankolayoutexample.statuslistener.setOnTimeTickStatusListener
+import com.example.ankolayoutexample.extensions.onPackageStatusListner
+import com.example.ankolayoutexample.statuslistener.*
 import org.jetbrains.anko.support.v4.toast
 
 
@@ -63,6 +61,10 @@ class FragmentApp : BaseFragment<FragmentApUi>() {
 
         setOnTimeTickStatusListener {
             // toast(it.time.toString())
+        }
+
+        onPhoneCallStatusListener {
+            toast(it.toString())
         }
 
 

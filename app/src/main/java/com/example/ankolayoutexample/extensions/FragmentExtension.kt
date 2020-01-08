@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.ankolayoutexample.activityResult.FileType
 import com.example.ankolayoutexample.activityResult.OnResultData
 import com.example.ankolayoutexample.statuslistener.PackageStatus
+import com.example.ankolayoutexample.statuslistener.onPackageStatusListner
 import java.io.File
 
 fun <T : Fragment> Fragment.replaceFragment(

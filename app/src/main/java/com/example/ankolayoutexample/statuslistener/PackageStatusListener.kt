@@ -6,7 +6,23 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+
+fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    PackageStatusListener(this)
+        .observe(this , Observer (lambda))
+}
+
+fun Fragment.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    activity?.let {
+        (it as AppCompatActivity).onPackageStatusListner(lambda)
+    }
+}
+
+
 
 class PackageStatusListener(private val context: Context) : LiveData<PackageStatus>(){
 
