@@ -15,4 +15,8 @@
     <string name="offers_text">Find great offers while you discover</string>
     <string name="rewards_text"><![CDATA[Free recharge coupons & more]]></string>
     <string name="get_started">Get Started</string>
+
+    <string name="policy_link" translatable="false">"
+        <![CDATA[ Agree with our <a href="http://showcallerid.zoobidev.com/terms-of-services.php">Terms of Service</a> and <a href="http://showcallerid.zoobidev.com/privacy-policy.php">Privacy Policy</a> ]]>"
+    </string>
 </resources>

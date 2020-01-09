@@ -11,7 +11,6 @@ import org.jetbrains.anko.cancelButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import com.example.ankolayoutexample.extensions.*
-import com.example.ankolayoutexample.extensions.onPackageStatusListner
 import com.example.ankolayoutexample.statuslistener.*
 import org.jetbrains.anko.support.v4.toast
 

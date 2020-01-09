@@ -114,8 +114,4 @@ fun Fragment.pickFileFromGallery(fileType: FileType , isMultiSelect : Boolean = 
 
 }
 
-fun Fragment.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
-    activity?.apply {
-        (this as AppCompatActivity).onPackageStatusListner(lambda)
-    }
-}
+

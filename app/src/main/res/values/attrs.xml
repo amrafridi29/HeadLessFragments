@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="GenAttrs">
+        <attr name="link_text" format="string|reference"/>
+    </declare-styleable>
+    <declare-styleable name="LinkedTextView">
+        <attr name="link_text"/>
+    </declare-styleable>
+
+    <declare-styleable name="LinkedCheckBox">
+        <attr name="link_text"/>
+    </declare-styleable>
+</resources>

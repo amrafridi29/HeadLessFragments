@@ -11,17 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
+
+
+
+fun Fragment.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
+    activity?.apply {
+        (this as AppCompatActivity).onPackageStatusListner(lambda)
+    }
+}
+
 fun AppCompatActivity.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
     PackageStatusListener(this)
         .observe(this , Observer (lambda))
 }
-
-fun Fragment.onPackageStatusListner(lambda : ((packageStatus : PackageStatus)-> Unit)){
-    activity?.let {
-        (it as AppCompatActivity).onPackageStatusListner(lambda)
-    }
-}
-
 
 
 class PackageStatusListener(private val context: Context) : LiveData<PackageStatus>(){

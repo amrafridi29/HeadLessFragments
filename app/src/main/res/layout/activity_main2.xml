@@ -6,7 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     >
+
+    <com.example.ankolayoutexample.widgets.LinkedCheckBox
+        android:textColorLink="#2196F3"
+        android:id="@+id/tvPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="212dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
     <androidx.viewpager.widget.ViewPager
+        android:visibility="gone"
         android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"

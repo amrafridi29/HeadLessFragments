@@ -13,17 +13,25 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.ankolayoutexample.service.ForegroundService
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main2.*
+import org.jetbrains.anko.browse
 
 class SliderActivity : AppCompatActivity() {
     private var adapter: SliderPagerAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         // making activity full screen
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         setContentView(R.layout.activity_main2)
+
+        tvPolicy.setHtmlText(R.string.policy_link)
+        tvPolicy.setOnLinkClickListener {
+            browse(it, true)
+        }
         // hide action bar you can use NoAction theme as well
 //    getSupportActionBar().hide();
 // bind views
